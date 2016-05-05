@@ -1,8 +1,9 @@
-<div ng-controller="mainController">
-
-<input type="text" ng-model="postText"> 
-<div ng-bind="postText"></div>
- <div class="submit" type="button" ng-click="addPost()">Submit<a href="/read"></a></div>
-    <br>
-    
+ <div class="container">
+    <div ng-controller="mainController">
+        <input type="text" ng-model="postText"> 
+        <div ng-bind="postText"></div>
+        <br>
+        <button class="submit" type="button" ng-click="addPost()">Submit</button>
+        <br>
+    </div>
 </div>

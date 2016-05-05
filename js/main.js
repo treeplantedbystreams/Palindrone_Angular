@@ -1,48 +1,48 @@
 var app= angular.module('palindroneApp', ["ngRoute"]);
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider   
- .when('/write', {
+ .when('/', {
     templateUrl: 'views/write.html',
     controller: "mainController",
  })
   
- .when('/read',{
+ .when('/read/:param',{
     templateUrl : 'views/read.html',
     controller: "palindroneController",
-
  })
-    
- .when('/', {
-         templateUrl: 'views/home.html',
+ .otherwise('/', {
+         templateUrl: 'views/write.html',
  })
 }]);
-
-
-app.controller('mainController', ['$scope','$location','$rootScope', function($scope,$location,$rootScope){ 
+app.controller('mainController', ['$scope','$location','$rootScope', function($scope, $location, $rootScope){ 
         $scope.addPost=function(postText){  
-            var postText= $scope.postText;
-            var words = postText.split(" ");
-            var output = new Array(); 
-            words.forEach(function(word) {
-                $rootScope.$broadcast(output.push(word.split("").reverse("").join("")));
-                }); 
-            
-            if (postText == null|| postText == ''){
+            var postText=$scope.postText;
+            console.log(postText);
+            if (postText == null|| postText == '') {
                 alert('You need to enter a word.');
-            } 
-            else{
-                console.log(output); 
-                $location.path('/read');
-            };             
-        }; 
+            }
+                else {
+                console.log(postText); 
+                $location.path("read/" + postText);    
+            }
+        };             
 }]);
-app.controller('palindroneController', ['$scope','$location', function($scope,$location){ 
-            $scope.$on("output", function(event,addPost){  
-            $scope.output = $scope.addPost(output);
-            }); 
+app.controller('palindroneController', ['$scope','$location','$routeParams', function($scope,$location,$routeParams){ 
+     $scope.firstword = $routeParams.param;
+     console.log("inside palindronecontroller");
+     $scope.reverseword = $routeParams.param.split("").reverse("").join("");   
+                              
 }]);
 
-
+// app.controller("submitPostController",['$scope',"postFactory", function($scope, postService){
+    
+//     $scope.addPost = function(){
+//         console.log($scope.post);
+//         postService.save($scope.post);
+      
+//     };
+       
+// }]);
   
 
   
